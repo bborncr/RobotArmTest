@@ -1,0 +1,185 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://robotarmtest12.dae" type="PackedScene" id=1]
+[ext_resource path="res://RobotArm.gd" type="Script" id=2]
+[ext_resource path="res://maujoe.camera_control/scripts/camera_control.gd" type="Script" id=3]
+[ext_resource path="res://art/pexels-photo-236734.jpeg" type="Texture" id=4]
+[ext_resource path="res://Material.material" type="Material" id=5]
+[ext_resource path="res://HorizontalCollisionShape.tscn" type="PackedScene" id=6]
+[ext_resource path="res://VerticalGuide.tscn" type="PackedScene" id=7]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="PlaneMesh" id=2]
+
+[sub_resource type="VisualShaderNodeTexture" id=3]
+texture = ExtResource( 4 )
+
+[sub_resource type="VisualShaderNodeInput" id=4]
+output_port_for_preview = 0
+input_name = "uv"
+
+[sub_resource type="VisualShader" id=5]
+code = "shader_type spatial;
+uniform sampler2D tex_frg_2;
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:3
+	vec3 n_out3p0;
+	n_out3p0 = vec3(UV,0.0);
+
+// Texture:2
+	vec3 n_out2p0;
+	float n_out2p1;
+	vec4 tex_frg_2_read = texture( tex_frg_2 , n_out3p0.xy );
+	n_out2p0 = tex_frg_2_read.rgb;
+	n_out2p1 = tex_frg_2_read.a;
+
+// Output:0
+	ALBEDO = n_out2p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -362, 7 )
+nodes/fragment/0/position = Vector2( 740, 20 )
+nodes/fragment/2/node = SubResource( 3 )
+nodes/fragment/2/position = Vector2( 180, 140 )
+nodes/fragment/3/node = SubResource( 4 )
+nodes/fragment/3/position = Vector2( -180, 140 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 3, 0, 2, 0 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
+
+[sub_resource type="CylinderShape" id=11]
+radius = 0.499269
+height = 0.11987
+
+[sub_resource type="CylinderMesh" id=7]
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_transparent = true
+albedo_color = Color( 1, 0.894118, 0.0235294, 0.560784 )
+emission_enabled = true
+emission = Color( 0.560784, 0.611765, 0.0823529, 1 )
+emission_energy = 2.1
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="ArrayMesh" id=9]
+resource_name = "Cube"
+surfaces/0 = {
+"aabb": AABB( -2, -0.25, -2, 4.00001, 0.5, 4.00001 ),
+"array_data": PoolByteArray( 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 129, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 129, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 129, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 127, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 0, 127, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 0, 127, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 129, 0, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 129, 0, 0, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 129, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 0, 129, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 0, 129, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 0, 0, 129, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 129, 0, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 129, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 129, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 127, 0, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 0, 127, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 0, 0, 127, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 129, 0, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 129, 0, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 129, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 0, 129, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 0, 129, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 0, 129, 0 ),
+"array_index_data": PoolByteArray( 0, 0, 2, 0, 1, 0, 3, 0, 5, 0, 4, 0, 6, 0, 8, 0, 7, 0, 9, 0, 11, 0, 10, 0, 12, 0, 14, 0, 13, 0, 15, 0, 17, 0, 16, 0, 18, 0, 20, 0, 19, 0, 21, 0, 23, 0, 22, 0, 24, 0, 26, 0, 25, 0, 27, 0, 29, 0, 28, 0, 30, 0, 32, 0, 31, 0, 33, 0, 35, 0, 34, 0 ),
+"blend_shape_data": [  ],
+"format": 97539,
+"index_count": 36,
+"material": ExtResource( 5 ),
+"name": "Material",
+"primitive": 4,
+"skeleton_aabb": [  ],
+"vertex_count": 36
+}
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 2.01293, 0.292082, 2.00783 )
+
+[node name="RobotArm" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+target_path = NodePath("Armature/Target")
+speed = 5
+ik_path = NodePath("Armature/Skeleton/SkeletonIK")
+ray_vertical_path = NodePath("Armature/Target/RayCast_Vertical")
+marker_path = NodePath("MarkerVertical")
+ray_horizontal_path = NodePath("Armature/Target/RayCast_Horizontal")
+marker2_path = NodePath("VerticalGuide")
+
+[node name="Skeleton" parent="Armature" index="0"]
+bones_in_world_transform = false
+
+[node name="SkeletonIK" type="SkeletonIK" parent="Armature/Skeleton" index="2"]
+root_bone = "Bone"
+tip_bone = "Bone.002"
+target_node = NodePath("../../Target")
+min_distance = 0.0
+
+[node name="Target" type="Position3D" parent="Armature" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0304438, 4.94258, -4.07937 )
+
+[node name="RayCast_Vertical" type="RayCast" parent="Armature/Target" index="0"]
+enabled = true
+cast_to = Vector3( 0, -10, 0 )
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="RayCast_Horizontal" type="RayCast" parent="Armature/Target" index="1"]
+enabled = true
+cast_to = Vector3( 0, 0, -30 )
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Camera" parent="." index="2"]
+transform = Transform( -4.37114e-008, -0.173648, 0.984807, 0, 0.984807, 0.173648, -1, 7.5904e-009, -4.30473e-008, 10.8253, 6.43721, -1.54347 )
+script = ExtResource( 3 )
+pivot = NodePath("../Armature")
+distance = 20.0
+collisions = false
+forward_action = "camera_up"
+backward_action = "camera_down"
+left_action = "camera_left"
+right_action = "camera_right"
+
+[node name="Lamp" parent="." index="3"]
+transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 10.7796, -1.00545 )
+
+[node name="Floor" type="Area" parent="." index="4"]
+editor/display_folded = true
+transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, 0, 0 )
+gravity_point = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor" index="0"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Floor" index="1"]
+transform = Transform( 0.2, 0, 0, 0, 1, 0, 0, 0, 0.2, -6.87265e-005, 0.0412703, -8.61645e-005 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 6 )
+
+[node name="MarkerVertical" type="StaticBody" parent="." index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27587, -5.17577 )
+
+[node name="CollisionShape" type="CollisionShape" parent="MarkerVertical" index="0"]
+shape = SubResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="MarkerVertical" index="1"]
+transform = Transform( 0.5, 0, 0, 0, 0.05, 0, 0, 0, 0.5, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="Base" type="Area" parent="." index="6"]
+editor/display_folded = true
+
+[node name="001-Base" type="MeshInstance" parent="Base" index="0"]
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Base" index="1"]
+shape = SubResource( 10 )
+
+[node name="HorizontalCollider" parent="." index="8" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.05962 )
+
+[node name="VerticalGuide" parent="." index="9" instance=ExtResource( 7 )]
+
