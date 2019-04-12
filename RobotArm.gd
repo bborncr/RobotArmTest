@@ -51,5 +51,4 @@ func _process(delta):
 		marker_pos.x = 0
 		marker_pos.y = vertical_pos
 		marker_pos.z = 0
-		print(marker_pos)
 		marker2.set_translation(marker_pos)
