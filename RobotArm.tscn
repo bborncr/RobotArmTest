@@ -130,7 +130,7 @@ cast_to = Vector3( 0, 0, -30 )
 collide_with_areas = true
 collide_with_bodies = false
 
-[node name="Camera" parent="." index="1"]
+[node name="Camera" parent="." index="2"]
 transform = Transform( -4.37114e-008, -0.173648, 0.984807, 0, 0.984807, 0.173648, -1, 7.5904e-009, -4.30473e-008, 10.8253, 6.43721, -1.54347 )
 script = ExtResource( 3 )
 pivot = NodePath("../Armature")
@@ -140,9 +140,6 @@ forward_action = "camera_up"
 backward_action = "camera_down"
 left_action = "camera_left"
 right_action = "camera_right"
-
-[node name="Lamp" parent="." index="2"]
-transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 10.7796, -1.00545 )
 
 [node name="Floor" type="Area" parent="." index="3"]
 transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, 0, 0 )
@@ -175,6 +172,9 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Base" index="1"]
 shape = SubResource( 10 )
+
+[node name="Lamp" parent="." index="6"]
+transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 10.7796, -1.00545 )
 
 [node name="HorizontalCollider" parent="." index="7" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.05962 )
