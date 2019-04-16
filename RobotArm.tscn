@@ -214,8 +214,10 @@ transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.7
 
 [node name="FocusPoint" type="Spatial" parent="."]
 
-[node name="Camera" type="Camera" parent="FocusPoint"]
-transform = Transform( -4.37114e-008, -0.241007, 0.970523, 0, 0.970524, 0.241007, -1, 1.05348e-008, -4.24229e-008, 15.4791, 5.31868, -1.49169 )
+[node name="Gimbal" type="Spatial" parent="FocusPoint"]
+
+[node name="Camera" type="Camera" parent="FocusPoint/Gimbal"]
+transform = Transform( -4.37114e-008, -0.241007, 0.970523, 0, 0.970523, 0.241007, -1, 1.05348e-008, -4.24229e-008, 15.4791, 5.31868, -1.49169 )
 current = true
 fov = 49.1343
 near = 0.1

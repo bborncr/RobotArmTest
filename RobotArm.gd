@@ -21,8 +21,6 @@ var is_marker1_under_mouse = false
 var is_marker1_dragged = false
 var is_camera_dragged = false
 
-var x_or_y = false
-
 func _ready():
 #	target = get_node(target_path)
 	ik = get_node(ik_path)
@@ -77,14 +75,9 @@ func _unhandled_input(event):
 	elif event is InputEventMouseButton and event.get_button_index() == 3 and !event.is_pressed():
 		is_camera_dragged = false
 	elif event is InputEventMouseMotion and is_camera_dragged:
-		if x_or_y:
-			print("y")
-			$FocusPoint.rotate_object_local(Vector3(0,0,1), event.relative.y * PI/360)
-		else:
-			print("x")
-			$FocusPoint.rotate_object_local(Vector3(0,-1,0), event.relative.x * PI/360)
-		x_or_y = !x_or_y
-		$FocusPoint.orthonormalize()
+		$FocusPoint/Gimbal.rotate_object_local(Vector3(0,0,1), event.relative.y * PI/360)
+		$FocusPoint.rotate_object_local(Vector3(0,-1,0), event.relative.x * PI/360)
+
 
 func _on_MarkerVertical_mouse_entered():
 	print("Entered marker1")
