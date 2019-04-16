@@ -124,13 +124,12 @@ extents = Vector3( 2.01293, 0.292082, 2.00783 )
 
 [node name="RobotArm" type="Spatial"]
 script = ExtResource( 1 )
-target_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target")
-speed = 5
 ik_path = NodePath("ArmIK")
 ray_vertical_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target/RayCast_Vertical")
 marker_path = NodePath("MarkerVertical")
 ray_horizontal_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target/RayCast_Horizontal")
 marker2_path = NodePath("VerticalGuide")
+camera_node = NodePath("FocusPoint/Gimbal/Camera")
 
 [node name="Armature" type="Spatial" parent="."]
 editor/display_folded = true
@@ -213,6 +212,7 @@ input_ray_pickable = false
 transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 10.7796, -1.00545 )
 
 [node name="FocusPoint" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="Gimbal" type="Spatial" parent="FocusPoint"]
 

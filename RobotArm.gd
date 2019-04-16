@@ -1,8 +1,5 @@
 extends Spatial
 
-export(NodePath) var target_path
-#var target
-export var speed = 50
 export(NodePath) var ik_path
 var ik
 export(NodePath) var ray_vertical_path
@@ -11,15 +8,19 @@ export(NodePath) var marker_path
 export(NodePath) var ray_horizontal_path
 var ray_z
 export(NodePath) var marker2_path
+export(NodePath) var camera_node
 
 onready var marker = get_node(marker_path)
 onready var marker2 = get_node(marker2_path)
 onready var skeleton = get_node("Armature")
-onready var target = get_node(target_path)
+onready var camera = get_node(camera_node)
 
 var is_marker1_under_mouse = false
 var is_marker1_dragged = false
 var is_camera_dragged = false
+
+var x_target = 100
+var y_target = 100
 
 func _ready():
 #	target = get_node(target_path)
@@ -34,13 +35,13 @@ func _ready():
 	
 func _process(delta):
 	if Input.is_action_pressed("ui_up"):
-		target.translate_object_local(transform.basis.y * delta * speed)
+		y_target = y_target + 1
 	if Input.is_action_pressed("ui_down"):
-		target.translate_object_local(-transform.basis.y * delta * speed)
+		y_target = y_target - 1
 	if Input.is_action_pressed("ui_left"):
-		target.translate_object_local(transform.basis.z * delta * speed)
+		x_target = x_target - 1
 	if Input.is_action_pressed("ui_right"):
-		target.translate_object_local(-transform.basis.z * delta * speed)
+		x_target = x_target + 1
 		
 	if ray_y.is_enabled() and ray_y.is_colliding():
 		var collision_point = ray_y.get_collision_point()
@@ -54,7 +55,8 @@ func _process(delta):
 		marker_pos.z = 0
 		marker2.set_translation(marker_pos)
 		
-	ik.calcIK(90, 75, 0, 90, 90, 90)
+	if !ik.calcIK(x_target, y_target, 0, 90, 90, 90):
+		print("IK Error!")
 	
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_marker1_under_mouse:
@@ -64,7 +66,7 @@ func _unhandled_input(event):
 	elif event is InputEventMouseButton and !event.is_pressed() and is_marker1_dragged:
 		is_marker1_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		var positionOnScreen = $FocusPoint/Camera.unproject_position(marker.get_global_transform().origin)
+		var positionOnScreen = camera.unproject_position(marker.get_global_transform().origin)
 		get_viewport().warp_mouse(positionOnScreen)
 		print("Marker1 released")
 	elif event is InputEventMouseMotion and is_marker1_dragged:
