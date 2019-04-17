@@ -18,6 +18,7 @@ onready var camera = get_node(camera_node)
 var is_marker1_under_mouse = false
 var is_marker1_dragged = false
 var is_camera_dragged = false
+var is_ik_enabled = true
 
 var x_target = 100
 var y_target = 100
@@ -29,7 +30,7 @@ func _ready():
 	ray_y = get_node(ray_vertical_path)
 	marker.show()
 	ray_z = get_node(ray_horizontal_path)
-	marker2.show()
+	marker2.hide()
 	
 	set_process(true)
 	
@@ -55,8 +56,8 @@ func _process(delta):
 		marker_pos.z = 0
 		marker2.set_translation(marker_pos)
 		
-	if !ik.calcIK(x_target, y_target, 0, 90, 90, 90):
-		print("IK Error!")
+	if is_ik_enabled:
+		ik.calcIK(x_target, y_target, 0, 90, 90, 90)
 	
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_marker1_under_mouse:
@@ -92,14 +93,15 @@ func _on_MarkerVertical_mouse_exited():
 func _on_VerticalGuide_mouse_entered():
 	print("Working!!")
 
-func _on_ArmIK_shoulder_servo_moved(shoulder):
-#	print(shoulder)
+func _on_ArmIK_servo_moved(z, shoulder, elbow, wrist, g):
 	$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
-
-func _on_ArmIK_elbow_servo_moved(elbow):
-#	print(elbow)
 	$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
+	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
 
-func _on_ArmIK_wrist_servo_moved(wrist):
-#	print(wrist)
-	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0)) 
+func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
+	$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
+	$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
+	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
+
+func _on_HUD_is_ik_enabled(value):
+	is_ik_enabled = value

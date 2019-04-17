@@ -4,11 +4,7 @@ const rtod = 57.295779
 export var a = 100
 export var b = 100
 
-signal base_servo_moved
-signal shoulder_servo_moved
-signal elbow_servo_moved
-signal wrist_servo_moved
-signal grip_servo_moved
+signal servo_moved
 
 func _ready():
 	pass # Replace with function body.
@@ -30,11 +26,7 @@ func calcIK(x, y, z, g, wa, wr):
 	while int(elbow) <= 0 or int(shoulder) <= 0:
     	return -1
 	var wrist = abs(wa - elbow - shoulder);
-	emit_signal("base_servo_moved", z)
-	emit_signal("shoulder_servo_moved", shoulder)
-	emit_signal("elbow_servo_moved", elbow)
-	emit_signal("wrist_servo_moved", wrist)
-	emit_signal("grip_servo_moved", g)
+	emit_signal("servo_moved", z, shoulder, elbow, wrist, g)
 
 #  servo1.setValue(Shoulder);
 #  servo2.setValue(180-Elbow);

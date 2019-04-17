@@ -1,0 +1,21 @@
+[gd_scene format=2]
+
+[node name="ServoSlider" type="VBoxContainer"]
+margin_right = 226.0
+margin_bottom = 34.0
+
+[node name="Label" type="Label" parent="."]
+margin_right = 226.0
+margin_bottom = 14.0
+text = "Servo"
+align = 1
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_top = 18.0
+margin_right = 226.0
+margin_bottom = 34.0
+max_value = 180.0
+value = 90.0
+tick_count = 18
+ticks_on_borders = true
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://RobotArm.gd" type="Script" id=1]
 [ext_resource path="res://art/pexels-photo-236734.jpeg" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Collider.tscn" type="PackedScene" id=4]
 [ext_resource path="res://VerticalGuide.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ArmIK.tscn" type="PackedScene" id=6]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cylinder.003"
@@ -207,6 +208,7 @@ shape = SubResource( 14 )
 input_ray_pickable = false
 
 [node name="VerticalGuide" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="Lamp" type="OmniLight" parent="."]
 transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 10.7796, -1.00545 )
@@ -217,16 +219,20 @@ editor/display_folded = true
 [node name="Gimbal" type="Spatial" parent="FocusPoint"]
 
 [node name="Camera" type="Camera" parent="FocusPoint/Gimbal"]
-transform = Transform( -4.37114e-008, -0.241007, 0.970523, 0, 0.970523, 0.241007, -1, 1.05348e-008, -4.24229e-008, 15.4791, 5.31868, -1.49169 )
+transform = Transform( -4.37114e-008, -0.241007, 0.970523, 0, 0.970523, 0.241007, -1, 1.05348e-008, -4.24229e-008, 15.4791, 5.31868, -2.84712 )
 current = true
 fov = 49.1343
 near = 0.1
 
 [node name="ArmIK" parent="." instance=ExtResource( 6 )]
 
+[node name="HUD" parent="." instance=ExtResource( 7 )]
+mouse_filter = 2
+
 [connection signal="mouse_entered" from="MarkerVertical" to="." method="_on_MarkerVertical_mouse_entered"]
 [connection signal="mouse_exited" from="MarkerVertical" to="." method="_on_MarkerVertical_mouse_exited"]
 [connection signal="mouse_entered" from="VerticalGuide" to="." method="_on_VerticalGuide_mouse_entered"]
-[connection signal="elbow_servo_moved" from="ArmIK" to="." method="_on_ArmIK_elbow_servo_moved"]
-[connection signal="shoulder_servo_moved" from="ArmIK" to="." method="_on_ArmIK_shoulder_servo_moved"]
-[connection signal="wrist_servo_moved" from="ArmIK" to="." method="_on_ArmIK_wrist_servo_moved"]
+[connection signal="servo_moved" from="ArmIK" to="." method="_on_ArmIK_servo_moved"]
+[connection signal="servo_moved" from="ArmIK" to="HUD" method="_on_ArmIK_servo_moved"]
+[connection signal="is_ik_enabled" from="HUD" to="." method="_on_HUD_is_ik_enabled"]
+[connection signal="servo_manually_moved" from="HUD" to="." method="_on_HUD_servo_manually_moved"]
