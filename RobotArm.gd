@@ -14,10 +14,15 @@ onready var marker = get_node(marker_path)
 onready var marker2 = get_node(marker2_path)
 onready var skeleton = get_node("Armature")
 onready var camera = get_node(camera_node)
+onready var base_gizmo = get_node("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo")
 
 var is_marker1_under_mouse = false
 var is_marker1_dragged = false
 var is_camera_dragged = false
+var is_y_gizmo_under_mouse = false
+var is_y_gizmo_dragged = false
+var is_x_gizmo_under_mouse = false
+var is_x_gizmo_dragged = false
 var is_ik_enabled = true
 
 var x_target = 100
@@ -57,43 +62,65 @@ func _process(delta):
 		marker2.set_translation(marker_pos)
 		
 	if is_ik_enabled:
-		ik.calcIK(x_target, y_target, 0, 90, 90, 90)
+		ik.calcIK(x_target, y_target, 90, 90, 90, 90)
 	
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_marker1_under_mouse:
 		is_marker1_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		print("Marker1 being dragged")
-	elif event is InputEventMouseButton and !event.is_pressed() and is_marker1_dragged:
+	if event is InputEventMouseButton and !event.is_pressed() and is_marker1_dragged:
 		is_marker1_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		var positionOnScreen = camera.unproject_position(marker.get_global_transform().origin)
+		var positionOnScreen = camera.unproject_position(base_gizmo.get_global_transform().origin)
 		get_viewport().warp_mouse(positionOnScreen)
 		print("Marker1 released")
-	elif event is InputEventMouseMotion and is_marker1_dragged:
+	if event is InputEventMouseMotion and is_marker1_dragged:
 		print(event.relative)
 		skeleton.rotate_object_local(Vector3(0,1,0), event.relative.x * PI/360)
-	elif event is InputEventMouseButton and event.get_button_index() == 3 and event.is_pressed():
+	if event is InputEventMouseButton and event.get_button_index() == 3 and event.is_pressed():
 		is_camera_dragged = true
-	elif event is InputEventMouseButton and event.get_button_index() == 3 and !event.is_pressed():
+	if event is InputEventMouseButton and event.get_button_index() == 3 and !event.is_pressed():
 		is_camera_dragged = false
-	elif event is InputEventMouseMotion and is_camera_dragged:
+	if event is InputEventMouseMotion and is_camera_dragged:
 		$FocusPoint/Gimbal.rotate_object_local(Vector3(0,0,1), event.relative.y * PI/360)
 		$FocusPoint.rotate_object_local(Vector3(0,-1,0), event.relative.x * PI/360)
-
-
-func _on_MarkerVertical_mouse_entered():
-	print("Entered marker1")
+	if event is InputEventMouseButton and event.is_pressed() and is_y_gizmo_under_mouse:
+		is_y_gizmo_dragged = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		print("y gizmo dragged")
+	if event is InputEventMouseButton and !event.is_pressed() and is_y_gizmo_dragged:
+		is_y_gizmo_dragged = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		var positionOnScreen = camera.unproject_position(base_gizmo.get_global_transform().origin)
+		get_viewport().warp_mouse(positionOnScreen)
+		print("y gizmo released")
+	if event is InputEventMouseMotion and is_y_gizmo_dragged:
+		y_target = y_target - event.relative.y
+		
+	if event is InputEventMouseButton and event.is_pressed() and is_x_gizmo_under_mouse:
+		is_x_gizmo_dragged = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		print("x gizmo dragged")
+	if event is InputEventMouseButton and !event.is_pressed() and is_x_gizmo_dragged:
+		is_x_gizmo_dragged = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		var positionOnScreen = camera.unproject_position(base_gizmo.get_global_transform().origin)
+		get_viewport().warp_mouse(positionOnScreen)
+		print("x gizmo released")
+	if event is InputEventMouseMotion and is_x_gizmo_dragged:
+		x_target = x_target + event.relative.x
+	
+func _on_BaseGizmo_mouse_entered():
 	is_marker1_under_mouse = true
 	
-func _on_MarkerVertical_mouse_exited():
-	print("Exited marker1")
+func _on_BaseGizmo_mouse_exited():
 	is_marker1_under_mouse = false
-
+	
 func _on_VerticalGuide_mouse_entered():
-	print("Working!!")
-
-func _on_ArmIK_servo_moved(z, shoulder, elbow, wrist, g):
+	pass
+	
+func _on_ArmIK_servo_moved(base, shoulder, elbow, wrist, gripper):
 	$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
 	$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
 	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
@@ -102,6 +129,25 @@ func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
 	$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
 	$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
 	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
+	skeleton.set_rotation_degrees(Vector3(0,base-90,0))
 
 func _on_HUD_is_ik_enabled(value):
 	is_ik_enabled = value
+
+func _on_YGizmo_mouse_entered():
+	is_y_gizmo_under_mouse = true
+	print("YGizmo Enter")
+
+func _on_YGizmo_mouse_exited():
+	is_y_gizmo_under_mouse = false
+	print("YGizmo Exit")
+
+
+func _on_XGizmo_mouse_entered():
+	is_x_gizmo_under_mouse = true
+	print("XGizmo Enter")
+
+
+func _on_XGizmo_mouse_exited():
+	is_x_gizmo_under_mouse = false
+	print("XGizmo Exit")

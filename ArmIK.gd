@@ -11,7 +11,7 @@ func _ready():
 
 # Arm positioning routine utilizing inverse kinematics
 # z is base angle, y vertical distance from base, x is horizontal distance
-func calcIK(x, y, z, g, wa, wr):
+func calcIK(x, y, base, g, wa, wr):
 	var M = sqrt((y * y) + (x * x))
 #	print(M)
 	if M <= 0:
@@ -26,7 +26,7 @@ func calcIK(x, y, z, g, wa, wr):
 	while int(elbow) <= 0 or int(shoulder) <= 0:
     	return -1
 	var wrist = abs(wa - elbow - shoulder);
-	emit_signal("servo_moved", z, shoulder, elbow, wrist, g)
+	emit_signal("servo_moved", base, shoulder, elbow, wrist, g)
 
 #  servo1.setValue(Shoulder);
 #  servo2.setValue(180-Elbow);

@@ -1,12 +1,16 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://RobotArm.gd" type="Script" id=1]
-[ext_resource path="res://art/pexels-photo-236734.jpeg" type="Texture" id=2]
-[ext_resource path="res://Material.material" type="Material" id=3]
-[ext_resource path="res://Collider.tscn" type="PackedScene" id=4]
-[ext_resource path="res://VerticalGuide.tscn" type="PackedScene" id=5]
-[ext_resource path="res://ArmIK.tscn" type="PackedScene" id=6]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://GUI/BaseGizmo.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/YGizmo.tscn" type="PackedScene" id=3]
+[ext_resource path="res://GUI/XGizmo.tscn" type="PackedScene" id=4]
+[ext_resource path="res://art/pexels-photo-236734.jpeg" type="Texture" id=5]
+[ext_resource path="res://art/dotWhite.png" type="Texture" id=6]
+[ext_resource path="res://Material.material" type="Material" id=7]
+[ext_resource path="res://Collider.tscn" type="PackedScene" id=8]
+[ext_resource path="res://VerticalGuide.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ArmIK.tscn" type="PackedScene" id=10]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cylinder.003"
@@ -41,7 +45,7 @@ surfaces/0 = {
 [sub_resource type="PlaneMesh" id=4]
 
 [sub_resource type="VisualShaderNodeTexture" id=5]
-texture = ExtResource( 2 )
+texture = ExtResource( 5 )
 
 [sub_resource type="VisualShaderNodeInput" id=6]
 output_port_for_preview = 0
@@ -113,7 +117,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97539,
 "index_count": 36,
-"material": ExtResource( 3 ),
+"material": ExtResource( 7 ),
 "name": "Material",
 "primitive": 4,
 "skeleton_aabb": [  ],
@@ -133,7 +137,6 @@ marker2_path = NodePath("VerticalGuide")
 camera_node = NodePath("FocusPoint/Gimbal/Camera")
 
 [node name="Armature" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="002-Shoulder2" type="MeshInstance" parent="Armature"]
 mesh = SubResource( 1 )
@@ -169,6 +172,17 @@ enabled = true
 cast_to = Vector3( 0, 0, -30 )
 collide_with_areas = true
 
+[node name="BaseGizmo" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+input_ray_pickable = true
+
+[node name="YGizmo" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2" instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, 0, 5, 0 )
+input_ray_pickable = true
+
+[node name="XGizmo" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0, 5.5, 0 )
+
 [node name="Floor" type="Area" parent="."]
 editor/display_folded = true
 transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, 0, 0 )
@@ -191,8 +205,14 @@ shape = SubResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MarkerVertical"]
 transform = Transform( 0.5, 0, 0, 0, 0.05, 0, 0, 0, 0.5, 0, 0, 0 )
+visible = false
 mesh = SubResource( 11 )
 material/0 = SubResource( 12 )
+
+[node name="Sprite3D" type="Sprite3D" parent="MarkerVertical"]
+transform = Transform( 5, 0, 0, 0, -2.18557e-007, -1, 0, 5, -4.37114e-008, 0, 0, 0 )
+modulate = Color( 1, 1, 1, 0.611765 )
+texture = ExtResource( 6 )
 
 [node name="Base" type="Area" parent="."]
 editor/display_folded = true
@@ -204,10 +224,10 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="Base"]
 shape = SubResource( 14 )
 
-[node name="Collider" parent="." instance=ExtResource( 4 )]
+[node name="Collider" parent="." instance=ExtResource( 8 )]
 input_ray_pickable = false
 
-[node name="VerticalGuide" parent="." instance=ExtResource( 5 )]
+[node name="VerticalGuide" parent="." instance=ExtResource( 9 )]
 visible = false
 
 [node name="Lamp" type="OmniLight" parent="."]
@@ -224,13 +244,17 @@ current = true
 fov = 49.1343
 near = 0.1
 
-[node name="ArmIK" parent="." instance=ExtResource( 6 )]
+[node name="ArmIK" parent="." instance=ExtResource( 10 )]
 
-[node name="HUD" parent="." instance=ExtResource( 7 )]
+[node name="HUD" parent="." instance=ExtResource( 11 )]
 mouse_filter = 2
 
-[connection signal="mouse_entered" from="MarkerVertical" to="." method="_on_MarkerVertical_mouse_entered"]
-[connection signal="mouse_exited" from="MarkerVertical" to="." method="_on_MarkerVertical_mouse_exited"]
+[connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_entered"]
+[connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_exited"]
+[connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/YGizmo" to="." method="_on_YGizmo_mouse_entered"]
+[connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/YGizmo" to="." method="_on_YGizmo_mouse_exited"]
+[connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/XGizmo" to="." method="_on_XGizmo_mouse_entered"]
+[connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/XGizmo" to="." method="_on_XGizmo_mouse_exited"]
 [connection signal="mouse_entered" from="VerticalGuide" to="." method="_on_VerticalGuide_mouse_entered"]
 [connection signal="servo_moved" from="ArmIK" to="." method="_on_ArmIK_servo_moved"]
 [connection signal="servo_moved" from="ArmIK" to="HUD" method="_on_ArmIK_servo_moved"]
