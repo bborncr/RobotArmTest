@@ -24,11 +24,11 @@ func _on_ArmIK_servo_moved(base, shoulder, elbow, wrist, gripper):
 	_elbow = elbow
 	_wrist = wrist
 	_gripper = gripper
-	$Panel/VBox/BaseSlider/HSlider.set_value(_base)
-	$Panel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
-	$Panel/VBox/ElbowSlider/HSlider.set_value(_elbow)
-	$Panel/VBox/WristSlider/HSlider.set_value(_wrist)
-	$Panel/VBox/GripperSlider/HSlider.set_value(_gripper)
+	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
+	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
+	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
+	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
+	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
 
 func _on_gripper_value_changed(value):
 	_gripper = value

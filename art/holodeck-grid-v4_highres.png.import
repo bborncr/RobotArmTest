@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/pexels-photo-236734.jpeg-b5e0a2e8b887a6c5d02b7f96245b2d7e.s3tc.stex"
-path.etc2="res://.import/pexels-photo-236734.jpeg-b5e0a2e8b887a6c5d02b7f96245b2d7e.etc2.stex"
+path.s3tc="res://.import/holodeck-grid-v4_highres.png-290c639fc82bedfe4939aa92ec6b2290.s3tc.stex"
+path.etc2="res://.import/holodeck-grid-v4_highres.png-290c639fc82bedfe4939aa92ec6b2290.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://art/pexels-photo-236734.jpeg"
-dest_files=[ "res://.import/pexels-photo-236734.jpeg-b5e0a2e8b887a6c5d02b7f96245b2d7e.s3tc.stex", "res://.import/pexels-photo-236734.jpeg-b5e0a2e8b887a6c5d02b7f96245b2d7e.etc2.stex" ]
+source_file="res://art/holodeck-grid-v4_highres.png"
+dest_files=[ "res://.import/holodeck-grid-v4_highres.png-290c639fc82bedfe4939aa92ec6b2290.s3tc.stex", "res://.import/holodeck-grid-v4_highres.png-290c639fc82bedfe4939aa92ec6b2290.etc2.stex" ]
 
 [params]
 

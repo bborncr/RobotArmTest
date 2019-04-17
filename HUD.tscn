@@ -1,25 +1,36 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GUI/HUD.gd" type="Script" id=1]
-[ext_resource path="res://GUI/ServoSlider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/lightstyle.tres" type="StyleBox" id=2]
+[ext_resource path="res://GUI/ServoSlider.tscn" type="PackedScene" id=3]
+
+[sub_resource type="VisualShader" id=1]
+graph_offset = Vector2( -242, 116 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 
 [node name="HUD" type="Control"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -2.70752
-margin_right = -2.70752
+margin_left = -1.85013
+margin_top = -0.857376
+margin_right = -1.85016
+margin_bottom = -0.857361
 script = ExtResource( 1 )
 
-[node name="Panel" type="Panel" parent="."]
-self_modulate = Color( 1, 1, 1, 0.156863 )
+[node name="ServoPanel" type="Panel" parent="."]
+material = SubResource( 2 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -306.0
 margin_top = 45.0
 margin_right = -40.0
 margin_bottom = 457.0
+custom_styles/panel = ExtResource( 2 )
 
-[node name="VBox" type="VBoxContainer" parent="Panel"]
+[node name="VBox" type="VBoxContainer" parent="ServoPanel"]
 anchor_top = 0.5
 anchor_right = 0.93
 anchor_bottom = 0.5
@@ -29,45 +40,30 @@ margin_right = -1.38
 margin_bottom = 130.0
 custom_constants/separation = 23
 
-[node name="GripperSlider" parent="Panel/VBox" instance=ExtResource( 2 )]
+[node name="GripperSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
 editor/display_folded = true
 
-[node name="Label" parent="Panel/VBox/GripperSlider" index="0"]
-text = "Gripper"
-
-[node name="WristSlider" parent="Panel/VBox" instance=ExtResource( 2 )]
+[node name="WristSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
 editor/display_folded = true
 margin_top = 57.0
 margin_bottom = 91.0
 
-[node name="Label" parent="Panel/VBox/WristSlider" index="0"]
-text = "Wrist"
-
-[node name="ElbowSlider" parent="Panel/VBox" instance=ExtResource( 2 )]
+[node name="ElbowSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
 editor/display_folded = true
 margin_top = 114.0
 margin_bottom = 148.0
 
-[node name="Label" parent="Panel/VBox/ElbowSlider" index="0"]
-text = "Elbow"
-
-[node name="ShoulderSlider" parent="Panel/VBox" instance=ExtResource( 2 )]
+[node name="ShoulderSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
 editor/display_folded = true
 margin_top = 171.0
 margin_bottom = 205.0
 
-[node name="Label" parent="Panel/VBox/ShoulderSlider" index="0"]
-text = "Shoulder"
-
-[node name="BaseSlider" parent="Panel/VBox" instance=ExtResource( 2 )]
+[node name="BaseSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
 editor/display_folded = true
 margin_top = 228.0
 margin_bottom = 262.0
 
-[node name="Label" parent="Panel/VBox/BaseSlider" index="0"]
-text = "Base"
-
-[node name="SelectIK" type="CheckButton" parent="Panel/VBox"]
+[node name="SelectIK" type="CheckButton" parent="ServoPanel/VBox"]
 margin_top = 285.0
 margin_right = 226.0
 margin_bottom = 325.0
@@ -75,7 +71,7 @@ hint_tooltip = "Select between Manual servo control and Inverse Kinematics"
 pressed = true
 text = "Inverse Kinematics"
 
-[node name="TextureButton" type="Button" parent="Panel"]
+[node name="TextureButton" type="Button" parent="ServoPanel"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -86,19 +82,27 @@ margin_right = 25.5
 margin_bottom = -31.0
 text = "Home"
 
-[connection signal="value_changed" from="Panel/VBox/GripperSlider/HSlider" to="." method="_on_gripper_value_changed"]
-[connection signal="value_changed" from="Panel/VBox/WristSlider/HSlider" to="." method="_on_wrist_value_changed"]
-[connection signal="value_changed" from="Panel/VBox/ElbowSlider/HSlider" to="." method="_on_elbow_value_changed"]
-[connection signal="value_changed" from="Panel/VBox/ShoulderSlider/HSlider" to="." method="_on_shoulder_value_changed"]
-[connection signal="value_changed" from="Panel/VBox/BaseSlider/HSlider" to="." method="_on_base_value_changed"]
-[connection signal="toggled" from="Panel/VBox/SelectIK" to="." method="_on_SelectIK_toggled"]
+[node name="CoordPanel" type="Panel" parent="."]
+margin_left = 40.0
+margin_top = 45.0
+margin_right = 204.0
+margin_bottom = 94.0
+custom_styles/panel = ExtResource( 2 )
 
-[editable path="Panel/VBox/GripperSlider"]
+[node name="XLabel" type="Label" parent="CoordPanel"]
+margin_left = 23.6414
+margin_top = 12.1698
+margin_right = 59.6414
+margin_bottom = 26.1698
+rect_scale = Vector2( 1.5, 1.5 )
+text = "X 100"
 
-[editable path="Panel/VBox/WristSlider"]
+[node name="YLabel" type="Label" parent="CoordPanel"]
+margin_left = 93.754
+margin_top = 12.756
+margin_right = 128.754
+margin_bottom = 26.756
+rect_scale = Vector2( 1.5, 1.5 )
+text = "Y 100"
 
-[editable path="Panel/VBox/ElbowSlider"]
-
-[editable path="Panel/VBox/ShoulderSlider"]
-
-[editable path="Panel/VBox/BaseSlider"]
+[connection signal="toggled" from="ServoPanel/VBox/SelectIK" to="." method="_on_SelectIK_toggled"]
