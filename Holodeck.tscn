@@ -15,10 +15,10 @@ uv1_scale = Vector3( 15, 15, 15 )
 use_collision = true
 
 [node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0 )
 invert_faces = true
 width = 50.0
-height = 20.0
+height = 50.0
 depth = 50.0
 material = SubResource( 1 )
 

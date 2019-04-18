@@ -42,13 +42,13 @@ surfaces/0 = {
 
 [sub_resource type="BoxShape" id=3]
 
-[sub_resource type="CylinderShape" id=10]
+[sub_resource type="CylinderShape" id=4]
 radius = 0.499269
 height = 0.11987
 
-[sub_resource type="CylinderMesh" id=11]
+[sub_resource type="CylinderMesh" id=5]
 
-[sub_resource type="SpatialMaterial" id=12]
+[sub_resource type="SpatialMaterial" id=6]
 flags_transparent = true
 albedo_color = Color( 1, 0.894118, 0.0235294, 0.560784 )
 emission_enabled = true
@@ -57,7 +57,7 @@ emission_energy = 2.1
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="ArrayMesh" id=13]
+[sub_resource type="ArrayMesh" id=7]
 surfaces/0 = {
 "aabb": AABB( -2, -0.25, -2, 4.00001, 0.5, 4.00001 ),
 "array_data": PoolByteArray( 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 129, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 129, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 129, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 127, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 0, 127, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 0, 127, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 129, 0, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 129, 0, 0, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 129, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 0, 129, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 0, 129, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 0, 0, 129, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 129, 0, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 129, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 129, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 127, 0, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 0, 127, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 0, 0, 127, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 129, 0, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 129, 0, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 129, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 0, 129, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 0, 129, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 0, 129, 0 ),
@@ -72,10 +72,11 @@ surfaces/0 = {
 "vertex_count": 36
 }
 
-[sub_resource type="BoxShape" id=14]
+[sub_resource type="BoxShape" id=8]
 extents = Vector3( 2.01293, 0.292082, 2.00783 )
 
 [node name="RobotArm" type="Spatial"]
+editor/display_folded = true
 script = ExtResource( 1 )
 ik_path = NodePath("ArmIK")
 ray_vertical_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target/RayCast_Vertical")
@@ -144,13 +145,13 @@ editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27587, -5.17577 )
 
 [node name="CollisionShape" type="CollisionShape" parent="MarkerVertical"]
-shape = SubResource( 10 )
+shape = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="MarkerVertical"]
 transform = Transform( 0.5, 0, 0, 0, 0.05, 0, 0, 0, 0.5, 0, 0, 0 )
 visible = false
-mesh = SubResource( 11 )
-material/0 = SubResource( 12 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="Sprite3D" type="Sprite3D" parent="MarkerVertical"]
 transform = Transform( 5, 0, 0, 0, -2.18557e-007, -1, 0, 5, -4.37114e-008, 0, 0, 0 )
@@ -161,11 +162,11 @@ texture = ExtResource( 5 )
 editor/display_folded = true
 
 [node name="001-Base" type="MeshInstance" parent="Base"]
-mesh = SubResource( 13 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Base"]
-shape = SubResource( 14 )
+shape = SubResource( 8 )
 
 [node name="Collider" parent="." instance=ExtResource( 7 )]
 input_ray_pickable = false
@@ -192,9 +193,6 @@ far = 448.3
 [node name="HUD" parent="." instance=ExtResource( 10 )]
 mouse_filter = 2
 
-[node name="ServoPanel" parent="HUD" index="0"]
-editor/display_folded = false
-
 [node name="ElbowSlider" parent="HUD/ServoPanel/VBox" index="2"]
 editor/display_folded = false
 
@@ -213,8 +211,8 @@ editor/display_folded = false
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/XGizmo" to="." method="_on_XGizmo_mouse_entered"]
 [connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/XGizmo" to="." method="_on_XGizmo_mouse_exited"]
 [connection signal="mouse_entered" from="VerticalGuide" to="." method="_on_VerticalGuide_mouse_entered"]
-[connection signal="servo_moved" from="ArmIK" to="HUD" method="_on_ArmIK_servo_moved"]
 [connection signal="servo_moved" from="ArmIK" to="." method="_on_ArmIK_servo_moved"]
+[connection signal="servo_moved" from="ArmIK" to="HUD" method="_on_ArmIK_servo_moved"]
 [connection signal="is_ik_enabled" from="HUD" to="." method="_on_HUD_is_ik_enabled"]
 [connection signal="servo_manually_moved" from="HUD" to="." method="_on_HUD_servo_manually_moved"]
 [connection signal="value_changed" from="HUD/ServoPanel/VBox/GripperSlider/HSlider" to="HUD" method="_on_gripper_value_changed"]
