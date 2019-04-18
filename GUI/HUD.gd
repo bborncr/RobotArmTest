@@ -97,4 +97,9 @@ func _on_PortList_item_selected(ID):
 	
 func send_message(msg):
 	msg += com.endline
+	print(msg)
 	PORT.write(msg) #write function, please use only ascii
+
+
+func _on_Button_pressed():
+	send_message(str(12))

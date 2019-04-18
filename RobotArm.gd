@@ -102,6 +102,7 @@ func _unhandled_input(event):
 		is_x_gizmo_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		print("x gizmo dragged")
+		$HUD.send_message("x gizmo")
 	if event is InputEventMouseButton and !event.is_pressed() and is_x_gizmo_dragged:
 		is_x_gizmo_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

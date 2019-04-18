@@ -86,6 +86,7 @@ marker2_path = NodePath("VerticalGuide")
 camera_node = NodePath("FocusPoint/Gimbal/Camera")
 
 [node name="Armature" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="002-Shoulder2" type="MeshInstance" parent="Armature"]
 mesh = SubResource( 1 )
@@ -191,7 +192,11 @@ far = 448.3
 [node name="ArmIK" parent="." instance=ExtResource( 9 )]
 
 [node name="HUD" parent="." instance=ExtResource( 10 )]
+editor/display_folded = true
 mouse_filter = 2
+
+[node name="ServoPanel" parent="HUD" index="0"]
+editor/display_folded = true
 
 [node name="ElbowSlider" parent="HUD/ServoPanel/VBox" index="2"]
 editor/display_folded = false
@@ -201,6 +206,21 @@ editor/display_folded = false
 
 [node name="BaseSlider" parent="HUD/ServoPanel/VBox" index="4"]
 editor/display_folded = false
+
+[node name="VBoxContainer" parent="HUD/SerialSettings" index="0"]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 240.0
+margin_bottom = 346.0
+
+[node name="OptionButton" parent="HUD/SerialSettings/VBoxContainer" index="0"]
+margin_right = 240.0
+
+[node name="UpdateButton" parent="HUD/SerialSettings/VBoxContainer" index="1"]
+margin_right = 240.0
+
+[node name="PortList" parent="HUD/SerialSettings/VBoxContainer" index="2"]
+margin_right = 240.0
 
 [node name="Holodeck" parent="." instance=ExtResource( 11 )]
 
