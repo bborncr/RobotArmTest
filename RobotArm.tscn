@@ -175,9 +175,12 @@ input_ray_pickable = false
 visible = false
 
 [node name="Lamp" type="OmniLight" parent="."]
-transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199883, -0.218391, 4.07625, 10.7796, -1.00545 )
+transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199884, -0.218392, 2.86506, 10.7796, -1.00545 )
+shadow_enabled = true
+omni_range = 19.9
 
 [node name="FocusPoint" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="Gimbal" type="Spatial" parent="FocusPoint"]
 
@@ -191,6 +194,7 @@ far = 448.3
 [node name="ArmIK" parent="." instance=ExtResource( 9 )]
 
 [node name="HUD" parent="." instance=ExtResource( 10 )]
+editor/display_folded = true
 mouse_filter = 2
 
 [node name="GripperSlider" parent="HUD/ServoPanel/VBox" index="0"]
