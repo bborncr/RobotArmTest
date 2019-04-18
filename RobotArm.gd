@@ -27,6 +27,7 @@ var is_ik_enabled = true
 
 var x_target = 100
 var y_target = 100
+var z = 90
 
 func _ready():
 #	target = get_node(target_path)
@@ -62,7 +63,7 @@ func _process(delta):
 		marker2.set_translation(marker_pos)
 		
 	if is_ik_enabled:
-		ik.calcIK(x_target, y_target, 90, 90, 90, 90)
+		ik.calcIK(x_target, y_target, z, 90, 90, 90)
 	
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_marker1_under_mouse:
@@ -76,8 +77,9 @@ func _unhandled_input(event):
 		get_viewport().warp_mouse(positionOnScreen)
 		print("Marker1 released")
 	if event is InputEventMouseMotion and is_marker1_dragged:
-		print(event.relative)
+#		print(event.relative)
 		skeleton.rotate_object_local(Vector3(0,1,0), event.relative.x * PI/360)
+		z = z + event.relative.x
 	if event is InputEventMouseButton and event.get_button_index() == 3 and event.is_pressed():
 		is_camera_dragged = true
 	if event is InputEventMouseButton and event.get_button_index() == 3 and !event.is_pressed():
@@ -102,7 +104,6 @@ func _unhandled_input(event):
 		is_x_gizmo_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		print("x gizmo dragged")
-		$HUD.send_message("x gizmo")
 	if event is InputEventMouseButton and !event.is_pressed() and is_x_gizmo_dragged:
 		is_x_gizmo_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

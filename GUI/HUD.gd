@@ -33,10 +33,10 @@ func _process(delta):
 #_physics_process may lag with lots of characters, but is the simplest way
 #for best speed, you can use a thread
 #do not use _process due to fps being too high
-func _physics_process(delta): 
-	if PORT.get_available()>0:
-		for i in range(PORT.get_available()):
-			$RichTextLabel.add_text(PORT.read())
+#func _physics_process(delta): 
+#	if PORT.get_available()>0:
+#		for i in range(PORT.get_available()):
+#			$RichTextLabel.add_text(PORT.read())
 
 func _on_ArmIK_servo_moved(base, shoulder, elbow, wrist, gripper):
 	_base = base
@@ -45,10 +45,15 @@ func _on_ArmIK_servo_moved(base, shoulder, elbow, wrist, gripper):
 	_wrist = wrist
 	_gripper = gripper
 	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
+	send_message(0, _base)
 	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
+	send_message(1, _shoulder)
 	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
+	send_message(2, _elbow)
 	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
+	send_message(3, _wrist)
 	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
+	send_message(4, _gripper)
 
 func _on_gripper_value_changed(value):
 	_gripper = value
@@ -95,11 +100,33 @@ func _on_PortList_item_selected(ID):
 	port=$SerialSettings/VBoxContainer/PortList.get_item_text(ID)
 	$SerialSettings/VBoxContainer/OptionButton.select(0)
 	
-func send_message(msg):
+func send_message(servo, pos):
+	var msg
+	var _servo = str(servo)
+	var _pos = str(pos)
+	var format_message = "%s,%s"
+	msg = format_message % [String(servo), String(pos)]
 	msg += com.endline
-	print(msg)
-	PORT.write(msg) #write function, please use only ascii
-
+#	print(msg)
+	PORT.write(msg)
 
 func _on_Button_pressed():
-	send_message(str(12))
+	send_message(0,255)
+
+
+func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
+	_base = base
+	_shoulder = shoulder
+	_elbow = elbow
+	_wrist = wrist
+	_gripper = gripper
+	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
+	send_message(0, _base)
+	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
+	send_message(1, _shoulder)
+	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
+	send_message(2, _elbow)
+	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
+	send_message(3, _wrist)
+	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
+	send_message(4, _gripper)

@@ -76,7 +76,6 @@ surfaces/0 = {
 extents = Vector3( 2.01293, 0.292082, 2.00783 )
 
 [node name="RobotArm" type="Spatial"]
-editor/display_folded = true
 script = ExtResource( 1 )
 ik_path = NodePath("ArmIK")
 ray_vertical_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target/RayCast_Vertical")
@@ -192,20 +191,49 @@ far = 448.3
 [node name="ArmIK" parent="." instance=ExtResource( 9 )]
 
 [node name="HUD" parent="." instance=ExtResource( 10 )]
-editor/display_folded = true
 mouse_filter = 2
 
-[node name="ServoPanel" parent="HUD" index="0"]
-editor/display_folded = true
+[node name="GripperSlider" parent="HUD/ServoPanel/VBox" index="0"]
+editor/display_folded = false
+
+[node name="Label" parent="HUD/ServoPanel/VBox/GripperSlider" index="0"]
+text = "Gripper	"
+
+[node name="WristSlider" parent="HUD/ServoPanel/VBox" index="1"]
+editor/display_folded = false
+
+[node name="Label" parent="HUD/ServoPanel/VBox/WristSlider" index="0"]
+text = "Wrist"
 
 [node name="ElbowSlider" parent="HUD/ServoPanel/VBox" index="2"]
 editor/display_folded = false
 
+[node name="Label" parent="HUD/ServoPanel/VBox/ElbowSlider" index="0"]
+text = "Elbow"
+
 [node name="ShoulderSlider" parent="HUD/ServoPanel/VBox" index="3"]
 editor/display_folded = false
 
+[node name="Label" parent="HUD/ServoPanel/VBox/ShoulderSlider" index="0"]
+text = "Shoulder"
+
 [node name="BaseSlider" parent="HUD/ServoPanel/VBox" index="4"]
 editor/display_folded = false
+
+[node name="Label" parent="HUD/ServoPanel/VBox/BaseSlider" index="0"]
+text = "Base"
+
+[node name="CoordPanel" parent="HUD" index="1"]
+editor/display_folded = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -82.0
+margin_top = 47.0
+margin_right = 82.0
+margin_bottom = 96.0
+
+[node name="SerialSettings" parent="HUD" index="2"]
+editor/display_folded = true
 
 [node name="VBoxContainer" parent="HUD/SerialSettings" index="0"]
 margin_left = 0.0
@@ -222,6 +250,9 @@ margin_right = 240.0
 [node name="PortList" parent="HUD/SerialSettings/VBoxContainer" index="2"]
 margin_right = 240.0
 
+[node name="Button" parent="HUD/SerialSettings/VBoxContainer" index="3"]
+margin_right = 240.0
+
 [node name="Holodeck" parent="." instance=ExtResource( 11 )]
 
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_entered"]
@@ -235,6 +266,7 @@ margin_right = 240.0
 [connection signal="servo_moved" from="ArmIK" to="HUD" method="_on_ArmIK_servo_moved"]
 [connection signal="is_ik_enabled" from="HUD" to="." method="_on_HUD_is_ik_enabled"]
 [connection signal="servo_manually_moved" from="HUD" to="." method="_on_HUD_servo_manually_moved"]
+[connection signal="servo_manually_moved" from="HUD" to="HUD" method="_on_HUD_servo_manually_moved"]
 [connection signal="value_changed" from="HUD/ServoPanel/VBox/GripperSlider/HSlider" to="HUD" method="_on_gripper_value_changed"]
 [connection signal="value_changed" from="HUD/ServoPanel/VBox/WristSlider/HSlider" to="HUD" method="_on_wrist_value_changed"]
 [connection signal="value_changed" from="HUD/ServoPanel/VBox/ElbowSlider/HSlider" to="HUD" method="_on_elbow_value_changed"]
