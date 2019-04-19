@@ -1,6 +1,15 @@
 # Robot Arm Controller using Godot
 The idea is to use a 3D representation of a robot arm in Godot as an interface to control and program sequences and animations of an Arduino based robot arm.
 ## Controls
-The idea is to use two markers to control the arm's 3D position. One marker is on the floor and indicates the horizontal distance and angle from the base. The second marker will indicated the vertical axis.
+* Use the middle mouse button to rotate camera
+* Grab the 3D Gizmo to change the position of the arm
+* Toggle off the Inverse Kinematics and use the sliders to control the individual servos
+* Click on the `Port Config` button and select the serial port
 
-Currently, the mouse and keyboard controls the camera (WASD keys) and the arrow keys control the target of the arm.
+## Serial Protocol
+The serial port is currectly set to 115200 baud.
+
+<servo_number,servo_position><new_line>
+
+Example:
+0,90<newline> sets servo 0 to 90 degrees
