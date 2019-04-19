@@ -12,4 +12,5 @@ The serial port is currectly set to 115200 baud.
 <servo_number,servo_position><new_line>
 
 Example:
-0,90<newline> sets servo 0 to 90 degrees
+
+`0,90<newline>` sets servo 0 to 90 degrees
