@@ -2,7 +2,7 @@ extends Control
 
 const SERCOMM = preload("res://bin/GDsercomm.gdns")
 onready var PORT = SERCOMM.new()
-
+onready var PortList = $SerialSettings/VBoxContainer/HBoxPort/PortList
 #helper node
 onready var com=$Com
 #use it as node since script alone won't have the editor help
@@ -20,10 +20,12 @@ var _gripper
 var update = false
 
 func _ready():
-	#adding the baudrates options
-	$SerialSettings/VBoxContainer/OptionButton.add_item("")
-	for index in com.baud_list: #first use of com helper
-		$SerialSettings/VBoxContainer/OptionButton.add_item(str(index))
+	# Scan for serial ports and add select the first in the list
+	for index in PORT.list_ports():
+		PortList.add_item(str(index))
+	if PortList.get_item_text(0) != null:
+		port = PortList.get_item_text(0)
+		print(port)
 
 func _process(delta):
 	if update:
@@ -81,24 +83,15 @@ func _on_SelectIK_toggled(button_pressed):
 	else:
 		emit_signal("is_ik_enabled", false)
 		
-func _on_OptionButton_item_selected(ID):
-	set_physics_process(false)
-	PORT.close()
-	if port!=null and ID!=0:
-		PORT.open(port,int($SerialSettings/VBoxContainer/OptionButton.get_item_text(ID)),1000)
-	else:
-		print("You must select a port first")
-	set_physics_process(true)
 	
 func _on_UpdateButton_pressed(): #Updates the port list
-	$SerialSettings/VBoxContainer/PortList.clear()
-	$SerialSettings/VBoxContainer/PortList.add_item("Select Port")
+	PortList.clear()
+	PortList.add_item("Select Port")
 	for index in PORT.list_ports():
-		$SerialSettings/VBoxContainer/PortList.add_item(str(index))
+		PortList.add_item(str(index))
 
 func _on_PortList_item_selected(ID):
-	port=$SerialSettings/VBoxContainer/PortList.get_item_text(ID)
-	$SerialSettings/VBoxContainer/OptionButton.select(0)
+	port = PortList.get_item_text(ID)
 	
 func send_message(servo, pos):
 	var msg
@@ -109,9 +102,6 @@ func send_message(servo, pos):
 	msg += com.endline
 #	print(msg)
 	PORT.write(msg)
-
-func _on_Button_pressed():
-	send_message(0,255)
 
 
 func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
@@ -130,3 +120,15 @@ func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
 	send_message(3, _wrist)
 	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
 	send_message(4, _gripper)
+
+
+func _on_Connect_pressed():
+	set_physics_process(false)
+	PORT.close()
+	if port!=null:
+		PORT.open(port,115200,1000)
+		print("connected")
+		$SerialSettings.hide()
+	else:
+		print("You must select a port first")
+	set_physics_process(true)

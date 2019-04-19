@@ -142,7 +142,7 @@ shape = SubResource( 3 )
 
 [node name="MarkerVertical" type="StaticBody" parent="."]
 editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.27587, -5.17577 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -5.176 )
 
 [node name="CollisionShape" type="CollisionShape" parent="MarkerVertical"]
 shape = SubResource( 4 )
@@ -194,7 +194,10 @@ far = 448.3
 [node name="ArmIK" parent="." instance=ExtResource( 9 )]
 
 [node name="HUD" parent="." instance=ExtResource( 10 )]
-editor/display_folded = true
+margin_left = 0.14987
+margin_top = 1.14262
+margin_right = 0.149902
+margin_bottom = 1.14264
 mouse_filter = 2
 
 [node name="GripperSlider" parent="HUD/ServoPanel/VBox" index="0"]
@@ -227,35 +230,36 @@ editor/display_folded = false
 [node name="Label" parent="HUD/ServoPanel/VBox/BaseSlider" index="0"]
 text = "Base"
 
-[node name="CoordPanel" parent="HUD" index="1"]
-editor/display_folded = false
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -82.0
-margin_top = 47.0
-margin_right = 82.0
-margin_bottom = 96.0
-
-[node name="SerialSettings" parent="HUD" index="2"]
-editor/display_folded = true
+[node name="SerialSettings" parent="HUD" index="1"]
+margin_top = -47.5
+margin_bottom = 47.5
 
 [node name="VBoxContainer" parent="HUD/SerialSettings" index="0"]
+editor/display_folded = true
+anchor_left = 0.0
+anchor_right = 1.0
 margin_left = 0.0
-margin_top = 0.0
-margin_right = 240.0
-margin_bottom = 346.0
+margin_top = -47.5
+margin_right = 0.0
+margin_bottom = 47.5
+alignment = 1
 
-[node name="OptionButton" parent="HUD/SerialSettings/VBoxContainer" index="0"]
-margin_right = 240.0
+[node name="HBoxPort" parent="HUD/SerialSettings/VBoxContainer" index="0"]
+margin_top = 17.0
+margin_bottom = 37.0
+alignment = 1
 
-[node name="UpdateButton" parent="HUD/SerialSettings/VBoxContainer" index="1"]
-margin_right = 240.0
+[node name="UpdateButton" parent="HUD/SerialSettings/VBoxContainer/HBoxPort" index="0"]
+margin_left = 48.0
+margin_right = 108.0
 
-[node name="PortList" parent="HUD/SerialSettings/VBoxContainer" index="2"]
-margin_right = 240.0
+[node name="PortList" parent="HUD/SerialSettings/VBoxContainer/HBoxPort" index="1"]
+margin_left = 112.0
+margin_right = 212.0
 
-[node name="Button" parent="HUD/SerialSettings/VBoxContainer" index="3"]
-margin_right = 240.0
+[node name="HBoxBaudRate" parent="HUD/SerialSettings/VBoxContainer" index="1"]
+margin_top = 57.0
+margin_bottom = 77.0
 
 [node name="Holodeck" parent="." instance=ExtResource( 11 )]
 

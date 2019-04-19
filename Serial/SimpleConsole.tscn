@@ -96,7 +96,6 @@ margin_right = 288.135
 margin_bottom = 200.361
 max_value = 180.0
 value = 90.0
-ticks_on_borders = false
 script = ExtResource( 3 )
 
 [node name="Tween" type="Tween" parent="HSlider2"]
