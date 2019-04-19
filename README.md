@@ -14,3 +14,6 @@ The serial port is currectly set to 115200 baud.
 Example:
 
 `0,90<newline>` sets servo 0 to 90 degrees
+
+## Screenshot
+![Screenshot](https://github.com/bborncr/RobotArmTest/blob/master/screenshots/RobotArmScreenshot1.png)
