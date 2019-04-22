@@ -19,6 +19,10 @@ config/name="RobotArmTest"
 run/main_scene="res://RobotArm.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+FileAccess="*res://FileAccess.gd"
+
 [input]
 
 ui_accept={

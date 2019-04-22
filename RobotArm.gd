@@ -18,6 +18,9 @@ onready var base_gizmo = get_node("Armature/002-Shoulder2/Spatial/003-Arm2/Spati
 onready var x_label = get_node("HUD/CoordPanel/XTitle/XValue")
 onready var y_label = get_node("HUD/CoordPanel/YTitle/YValue")
 onready var z_label = get_node("HUD/CoordPanel/ZTitle/ZValue")
+onready var easingx = get_node("EasingX")
+onready var easingy = get_node("EasingY")
+onready var easingz = get_node("EasingZ")
 
 var is_marker1_under_mouse = false
 var is_marker1_dragged = false
@@ -32,15 +35,21 @@ var x_target = 100
 var y_target = 100
 var z = 90
 
+var _poses = {
+	"speed": 1.5,
+	"pause": .5,
+	"loop": true,
+	"pose": [
+	{"x": 100,"y": 100,"z": 90,"g": 90,"wa": 90,"wr": 90}
+	]
+}
+
 func _ready():
-#	target = get_node(target_path)
 	ik = get_node(ik_path)
-#	ik.start() # used for the SkeletonIK node
 	ray_y = get_node(ray_vertical_path)
 	marker.show()
 	ray_z = get_node(ray_horizontal_path)
 	marker2.hide()
-	
 	set_process(true)
 	
 func _process(delta):
@@ -58,8 +67,13 @@ func _process(delta):
 		
 	if is_ik_enabled:
 		ik.calcIK(x_target, y_target, z, 90, 90, 90)
+		x_label.text = str(int(x_target))
+		y_label.text = str(int(y_target))
+		z_label.text = str(int(z))
 	
 func _unhandled_input(event):
+	
+	# Drag Z Gizmo
 	if event is InputEventMouseButton and event.is_pressed() and is_marker1_under_mouse:
 		is_marker1_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -75,7 +89,7 @@ func _unhandled_input(event):
 		skeleton.rotate_object_local(Vector3(0,1,0), event.relative.x * PI/360)
 		z = z + event.relative.x
 		z_label.text = str(z)
-		
+	# Hold down middle mouse to orbit camera around robot arm
 	if event is InputEventMouseButton and event.get_button_index() == 3 and event.is_pressed():
 		is_camera_dragged = true
 	if event is InputEventMouseButton and event.get_button_index() == 3 and !event.is_pressed():
@@ -83,6 +97,15 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and is_camera_dragged:
 		$FocusPoint/Gimbal.rotate_object_local(Vector3(0,0,1), event.relative.y * PI/360)
 		$FocusPoint.rotate_object_local(Vector3(0,-1,0), event.relative.x * PI/360)
+		
+	# Scroll mouse to change camera distance from robot arm
+	if event is InputEventMouseButton:
+		if event.get_button_index() == 4:
+			camera.translate(Vector3(0,0,-1))
+		if event.get_button_index() == 5:
+			camera.translate(Vector3(0,0,1))
+	
+	# Drag Y Gizmo
 	if event is InputEventMouseButton and event.is_pressed() and is_y_gizmo_under_mouse:
 		is_y_gizmo_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -96,7 +119,8 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion and is_y_gizmo_dragged:
 		y_target = y_target - event.relative.y
 		y_label.text = str(y_target)
-		
+	
+	# Drag X Gizmo
 	if event is InputEventMouseButton and event.is_pressed() and is_x_gizmo_under_mouse:
 		is_x_gizmo_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -136,18 +160,66 @@ func _on_HUD_is_ik_enabled(value):
 
 func _on_YGizmo_mouse_entered():
 	is_y_gizmo_under_mouse = true
-	print("YGizmo Enter")
+#	print("YGizmo Enter")
 
 func _on_YGizmo_mouse_exited():
 	is_y_gizmo_under_mouse = false
-	print("YGizmo Exit")
+#	print("YGizmo Exit")
 
 
 func _on_XGizmo_mouse_entered():
 	is_x_gizmo_under_mouse = true
-	print("XGizmo Enter")
+#	print("XGizmo Enter")
 
 
 func _on_XGizmo_mouse_exited():
 	is_x_gizmo_under_mouse = false
-	print("XGizmo Exit")
+#	print("XGizmo Exit")
+
+
+func _on_Button_pressed():
+	var new_pose = {"x": 100,"y": 100,"z": 90,"g": 90,"wa": 90,"wr": 90}
+	new_pose.x = x_target
+	new_pose.y = y_target
+	new_pose.z = z
+	_poses.pose.append(new_pose)
+	print("Added new pose")
+	print("Num poses:",_poses.pose.size())
+
+
+func _on_Button2_pressed():
+	for pose in _poses.pose:
+		if pose.has("x"):
+			easingx.interpolate_property(self, 'x_target', x_target, pose.x, _poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+		if pose.has("y"):
+			easingy.interpolate_property(self, 'y_target', y_target, pose.y, _poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+		if pose.has("z"):
+			easingz.interpolate_property(self, 'z', z, pose.z, _poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+		easingx.start()
+		easingy.start()
+		easingz.start()
+		print("x:",x_target)
+		print("y:",y_target)
+		print("z:",z)
+		yield(get_tree().create_timer(_poses.speed + _poses.pause), "timeout")
+
+func _on_Button4_pressed():
+	$HUD/FileDialog.set_mode(FileDialog.MODE_SAVE_FILE)
+	$HUD/FileDialog.popup()
+	
+func _on_Button3_pressed():
+	$HUD/FileDialog.set_mode(FileDialog.MODE_OPEN_FILE)
+	$HUD/FileDialog.popup()
+
+func _on_FileDialog_file_selected(path):
+	$HUD/FileDialog.popup()
+	if $HUD/FileDialog.get_mode() == FileDialog.MODE_OPEN_FILE:
+		print("Loading...")
+		print(path)
+		_poses = FileAccess.load(path)
+		$HUD/FileDialog.popup()
+	elif $HUD/FileDialog.get_mode() == FileDialog.MODE_SAVE_FILE:
+		print("Save")
+		FileAccess.save(_poses, path)
+		$HUD/FileDialog.popup()
+		
