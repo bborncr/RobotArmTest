@@ -35,6 +35,8 @@ var x_target = 100
 var y_target = 100
 var z = 90
 
+var mandatory_keys = ["x", "y", "z", "g", "wa", "wr"]
+
 var _poses = {
 	"speed": 1.5,
 	"pause": .5,
@@ -189,12 +191,12 @@ func _on_Button_pressed():
 
 func _on_Button2_pressed():
 	for pose in _poses.pose:
-		if pose.has("x"):
+		if pose.has_all(mandatory_keys):
 			easingx.interpolate_property(self, 'x_target', x_target, pose.x, _poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-		if pose.has("y"):
 			easingy.interpolate_property(self, 'y_target', y_target, pose.y, _poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-		if pose.has("z"):
 			easingz.interpolate_property(self, 'z', z, pose.z, _poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+		else:
+			print("Error: pose does not have all mandatory keys")
 		easingx.start()
 		easingy.start()
 		easingz.start()
@@ -205,21 +207,19 @@ func _on_Button2_pressed():
 
 func _on_Button4_pressed():
 	$HUD/FileDialog.set_mode(FileDialog.MODE_SAVE_FILE)
-	$HUD/FileDialog.popup()
+	$HUD/FileDialog.show_modal(true)
 	
 func _on_Button3_pressed():
 	$HUD/FileDialog.set_mode(FileDialog.MODE_OPEN_FILE)
-	$HUD/FileDialog.popup()
+	$HUD/FileDialog.show_modal(true)
 
 func _on_FileDialog_file_selected(path):
-	$HUD/FileDialog.popup()
 	if $HUD/FileDialog.get_mode() == FileDialog.MODE_OPEN_FILE:
 		print("Loading...")
 		print(path)
 		_poses = FileAccess.load(path)
-		$HUD/FileDialog.popup()
 	elif $HUD/FileDialog.get_mode() == FileDialog.MODE_SAVE_FILE:
-		print("Save")
+		print("Saving...")
+		print(path)
 		FileAccess.save(_poses, path)
-		$HUD/FileDialog.popup()
-		
+
