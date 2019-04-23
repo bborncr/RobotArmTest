@@ -30,6 +30,7 @@ func _ready():
 func _process(delta):
 	if update:
 		emit_signal("servo_manually_moved", _base, _shoulder, _elbow, _wrist, _gripper)
+#		print(_base)
 		update = false
 		
 #_physics_process may lag with lots of characters, but is the simplest way
@@ -41,19 +42,19 @@ func _process(delta):
 #			$RichTextLabel.add_text(PORT.read())
 
 func _on_ArmIK_servo_moved(base, shoulder, elbow, wrist, gripper):
-	_base = base
-	_shoulder = shoulder
-	_elbow = elbow
-	_wrist = wrist
-	_gripper = gripper
+	_base = int(base)
+	_shoulder = int(shoulder)
+	_elbow = int(elbow)
+	_wrist = int(wrist)
+	_gripper = int(gripper)
 	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
-	send_message(0, _base)
+	send_message(0, 180-_base)
 	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
 	send_message(1, _shoulder)
 	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
-	send_message(2, _elbow)
+	send_message(2, 180-_elbow)
 	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
-	send_message(3, _wrist)
+	send_message(3, _wrist-5)
 	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
 	send_message(4, _gripper)
 
@@ -95,38 +96,42 @@ func _on_PortList_item_selected(ID):
 	
 func send_message(servo, pos):
 	var msg
-	var _servo = str(servo)
-	var _pos = str(pos)
 	var format_message = "%s,%s"
 	msg = format_message % [String(servo), String(pos)]
+	print(msg)	
 	msg += com.endline
-#	print(msg)
 	PORT.write(msg)
 
 
 func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
-	_base = base
-	_shoulder = shoulder
-	_elbow = elbow
-	_wrist = wrist
-	_gripper = gripper
-	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
-	send_message(0, _base)
-	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
-	send_message(1, _shoulder)
-	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
-	send_message(2, _elbow)
-	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
-	send_message(3, _wrist)
-	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
-	send_message(4, _gripper)
+#	_base = base
+#	_shoulder = shoulder
+#	_elbow = elbow
+#	_wrist = wrist
+#	_gripper = gripper
+#	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
+#	send_message(0, _base)
+#	yield(get_tree().create_timer(0.1), "timeout")
+#	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
+#	send_message(1, _shoulder)
+#	yield(get_tree().create_timer(0.1), "timeout")
+#	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
+#	send_message(2, 180-_elbow) # elbow servo is inverted
+#	yield(get_tree().create_timer(0.1), "timeout")
+#	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
+#	send_message(3, _wrist)
+#	yield(get_tree().create_timer(0.1), "timeout")
+#	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
+#	send_message(4, _gripper)
+#	yield(get_tree().create_timer(0.1), "timeout")
+	pass
 
 
 func _on_Connect_pressed():
 	set_physics_process(false)
 	PORT.close()
 	if port!=null:
-		PORT.open(port,115200,1000)
+		PORT.open(port,38400,1000)
 		print("connected")
 		$SerialSettings.hide()
 	else:

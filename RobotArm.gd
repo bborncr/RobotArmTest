@@ -35,6 +35,8 @@ var x_target = 100
 var y_target = 100
 var z = 90
 
+var timer = false
+
 var mandatory_keys = ["x", "y", "z", "g", "wa", "wr"]
 
 var _poses = {
@@ -49,7 +51,7 @@ var _poses = {
 func _ready():
 	ik = get_node(ik_path)
 	ray_y = get_node(ray_vertical_path)
-	marker.show()
+	marker.hide()
 	ray_z = get_node(ray_horizontal_path)
 	marker2.hide()
 	set_process(true)
@@ -67,7 +69,8 @@ func _process(delta):
 		marker_pos.z = 0
 		marker2.set_translation(marker_pos)
 		
-	if is_ik_enabled:
+	if is_ik_enabled and timer:
+#		timer = false
 		ik.calcIK(x_target, y_target, z, 90, 90, 90)
 		x_label.text = str(int(x_target))
 		y_label.text = str(int(y_target))
@@ -79,17 +82,17 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_marker1_under_mouse:
 		is_marker1_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		print("Marker1 being dragged")
+#		print("Marker1 being dragged")
 	if event is InputEventMouseButton and !event.is_pressed() and is_marker1_dragged:
 		is_marker1_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		var positionOnScreen = camera.unproject_position(base_gizmo.get_global_transform().origin)
 		get_viewport().warp_mouse(positionOnScreen)
-		print("Marker1 released")
+#		print("Marker1 released")
 	if event is InputEventMouseMotion and is_marker1_dragged:
 #		print(event.relative)
-		skeleton.rotate_object_local(Vector3(0,1,0), event.relative.x * PI/360)
-		z = z + event.relative.x
+		skeleton.rotate_object_local(Vector3(0,1,0), -event.relative.x * PI/360)
+		z = z + -event.relative.x
 		z_label.text = str(z)
 	# Hold down middle mouse to orbit camera around robot arm
 	if event is InputEventMouseButton and event.get_button_index() == 3 and event.is_pressed():
@@ -111,13 +114,13 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_y_gizmo_under_mouse:
 		is_y_gizmo_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		print("y gizmo dragged")
+#		print("y gizmo dragged")
 	if event is InputEventMouseButton and !event.is_pressed() and is_y_gizmo_dragged:
 		is_y_gizmo_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		var positionOnScreen = camera.unproject_position(base_gizmo.get_global_transform().origin)
 		get_viewport().warp_mouse(positionOnScreen)
-		print("y gizmo released")
+#		print("y gizmo released")
 	if event is InputEventMouseMotion and is_y_gizmo_dragged:
 		y_target = y_target - event.relative.y
 		y_label.text = str(y_target)
@@ -126,13 +129,13 @@ func _unhandled_input(event):
 	if event is InputEventMouseButton and event.is_pressed() and is_x_gizmo_under_mouse:
 		is_x_gizmo_dragged = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		print("x gizmo dragged")
+#		print("x gizmo dragged")
 	if event is InputEventMouseButton and !event.is_pressed() and is_x_gizmo_dragged:
 		is_x_gizmo_dragged = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		var positionOnScreen = camera.unproject_position(base_gizmo.get_global_transform().origin)
 		get_viewport().warp_mouse(positionOnScreen)
-		print("x gizmo released")
+#		print("x gizmo released")
 	if event is InputEventMouseMotion and is_x_gizmo_dragged:
 		x_target = x_target + event.relative.x
 		x_label.text = str(x_target)
@@ -147,15 +150,20 @@ func _on_VerticalGuide_mouse_entered():
 	pass
 	
 func _on_ArmIK_servo_moved(base, shoulder, elbow, wrist, gripper):
-	$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
-	$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
-	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
+	if is_ik_enabled:
+		skeleton.set_rotation_degrees(Vector3(0,90-base,0))
+		$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
+		$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
+		$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
 
 func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
-	$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
-	$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
-	$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
-	skeleton.set_rotation_degrees(Vector3(0,base-90,0))
+	if !is_ik_enabled:
+		$"Armature/002-Shoulder2".set_rotation_degrees(Vector3(shoulder-90, 0, 0))
+		$"Armature/002-Shoulder2/Spatial".set_rotation_degrees(Vector3(elbow-90, 0, 0)) 
+		$"Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2".set_rotation_degrees(Vector3(90-wrist, 0, 0))
+		skeleton.set_rotation_degrees(Vector3(0,base-90,0))
+		var format_string = "%d,%d,%d,%d,%d"
+		print(format_string % [base, shoulder, elbow, wrist, gripper])
 
 func _on_HUD_is_ik_enabled(value):
 	is_ik_enabled = value
@@ -177,7 +185,6 @@ func _on_XGizmo_mouse_entered():
 func _on_XGizmo_mouse_exited():
 	is_x_gizmo_under_mouse = false
 #	print("XGizmo Exit")
-
 
 func _on_Button_pressed():
 	var new_pose = {"x": 100,"y": 100,"z": 90,"g": 90,"wa": 90,"wr": 90}
@@ -223,3 +230,6 @@ func _on_FileDialog_file_selected(path):
 		print(path)
 		FileAccess.save(_poses, path)
 
+
+func _on_Timer_timeout():
+	timer = true

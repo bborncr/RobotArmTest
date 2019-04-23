@@ -196,11 +196,15 @@ far = 448.3
 [node name="ArmIK" parent="." instance=ExtResource( 9 )]
 
 [node name="HUD" parent="." instance=ExtResource( 10 )]
+editor/display_folded = true
 margin_left = 0.14987
 margin_top = 1.14262
 margin_right = 0.149902
 margin_bottom = 1.14264
 mouse_filter = 2
+
+[node name="ServoPanel" parent="HUD" index="0"]
+editor/display_folded = false
 
 [node name="GripperSlider" parent="HUD/ServoPanel/VBox" index="0"]
 editor/display_folded = false
@@ -274,6 +278,10 @@ visible = false
 
 [node name="EasingZ" type="Tween" parent="."]
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_entered"]
 [connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_exited"]
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/YGizmo" to="." method="_on_YGizmo_mouse_entered"]
@@ -296,6 +304,7 @@ visible = false
 [connection signal="pressed" from="HUD/PosePanel/MarginContainer/HBoxContainer/Button3" to="." method="_on_Button3_pressed"]
 [connection signal="pressed" from="HUD/PosePanel/MarginContainer/HBoxContainer/Button4" to="." method="_on_Button4_pressed"]
 [connection signal="file_selected" from="HUD/FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 [editable path="HUD"]
 

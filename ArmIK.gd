@@ -27,8 +27,4 @@ func calcIK(x, y, base, g, wa, wr):
     	return -1
 	var wrist = abs(wa - elbow - shoulder);
 	emit_signal("servo_moved", base, shoulder, elbow, wrist, g)
-
-#  servo1.setValue(Shoulder);
-#  servo2.setValue(180-Elbow);
-#  servo3.setValue(180-Wris);
 	return 1
