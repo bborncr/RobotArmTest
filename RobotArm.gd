@@ -177,9 +177,9 @@ func _on_Button2_pressed():
 		easingy.start()
 		easingz.start()
 		pose_editor.select(i)
-		print("x:",x_target)
-		print("y:",y_target)
-		print("z:",z)
+#		print("x:",x_target)
+#		print("y:",y_target)
+#		print("z:",z)
 		yield(get_tree().create_timer(Data.poses.speed + Data.poses.pause), "timeout")
 		pose_editor.unselect(i)
 
@@ -198,7 +198,7 @@ func _on_FileDialog_file_selected(path):
 		print("Loading...")
 		print(path)
 		Data.poses = FileAccess.load(path)
-		print(Data.poses)
+#		print(Data.poses)
 		pose_editor.load_data()
 	elif $HUD/FileDialog.get_mode() == FileDialog.MODE_SAVE_FILE:
 		print("Saving...")
