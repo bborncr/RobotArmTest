@@ -7,7 +7,7 @@ The idea is to use a 3D representation of a robot arm in Godot as an interface t
 * Click on the `Port Config` button and select the serial port
 
 ## Serial Protocol
-The serial port is currectly set to 115200 baud.
+The serial port is currectly set to 38400 baud.
 
 <servo_number,servo_position><new_line>
 
