@@ -8,4 +8,3 @@ background_sky = SubResource( 1 )
 background_color = Color( 1, 1, 1, 1 )
 fog_enabled = true
 fog_color = Color( 0.737255, 0.866667, 0.87451, 1 )
-

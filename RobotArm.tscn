@@ -1,17 +1,15 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://RobotArm.gd" type="Script" id=1]
 [ext_resource path="res://GUI/BaseGizmo.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GUI/YGizmo.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/XGizmo.tscn" type="PackedScene" id=4]
-[ext_resource path="res://art/dotWhite.png" type="Texture" id=5]
-[ext_resource path="res://Material.material" type="Material" id=6]
-[ext_resource path="res://Collider.tscn" type="PackedScene" id=7]
-[ext_resource path="res://VerticalGuide.tscn" type="PackedScene" id=8]
-[ext_resource path="res://ArmIK.tscn" type="PackedScene" id=9]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Holodeck.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Gridlines.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Material.material" type="Material" id=5]
+[ext_resource path="res://ArmIK.tscn" type="PackedScene" id=6]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Holodeck.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Gridlines.tscn" type="PackedScene" id=9]
+[ext_resource path="res://PoseEditor.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cylinder.003"
@@ -43,22 +41,7 @@ surfaces/0 = {
 
 [sub_resource type="BoxShape" id=3]
 
-[sub_resource type="CylinderShape" id=4]
-radius = 0.499269
-height = 0.11987
-
-[sub_resource type="CylinderMesh" id=5]
-
-[sub_resource type="SpatialMaterial" id=6]
-flags_transparent = true
-albedo_color = Color( 1, 0.894118, 0.0235294, 0.560784 )
-emission_enabled = true
-emission = Color( 0.560784, 0.611765, 0.0823529, 1 )
-emission_energy = 2.1
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="ArrayMesh" id=7]
+[sub_resource type="ArrayMesh" id=4]
 surfaces/0 = {
 "aabb": AABB( -2, -0.25, -2, 4.00001, 0.5, 4.00001 ),
 "array_data": PoolByteArray( 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 129, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 129, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 129, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 127, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 0, 127, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 0, 127, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 129, 0, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 129, 0, 0, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 129, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 0, 129, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 0, 129, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 0, 0, 129, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 0, 129, 0, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 129, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 129, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 127, 0, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 0, 127, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 127, 0, 0, 4, 0, 0, 64, 0, 0, 128, 62, 247, 255, 255, 191, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 127, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 0, 0, 0, 64, 127, 0, 0, 0, 245, 255, 255, 63, 0, 0, 128, 62, 5, 0, 0, 64, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 0, 0, 127, 0, 1, 0, 0, 192, 0, 0, 128, 190, 253, 255, 255, 63, 0, 0, 127, 0, 3, 0, 0, 192, 0, 0, 128, 62, 250, 255, 255, 63, 129, 0, 0, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 129, 0, 0, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 129, 0, 0, 0, 0, 0, 0, 64, 0, 0, 128, 190, 255, 255, 255, 191, 0, 0, 129, 0, 250, 255, 255, 191, 0, 0, 128, 190, 3, 0, 0, 192, 0, 0, 129, 0, 255, 255, 255, 191, 0, 0, 128, 62, 0, 0, 0, 192, 0, 0, 129, 0 ),
@@ -66,23 +49,19 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 97539,
 "index_count": 36,
-"material": ExtResource( 6 ),
+"material": ExtResource( 5 ),
 "name": "Material",
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 36
 }
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=5]
 extents = Vector3( 2.01293, 0.292082, 2.00783 )
 
 [node name="RobotArm" type="Spatial"]
 script = ExtResource( 1 )
 ik_path = NodePath("ArmIK")
-ray_vertical_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target/RayCast_Vertical")
-marker_path = NodePath("MarkerVertical")
-ray_horizontal_path = NodePath("Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target/RayCast_Horizontal")
-marker2_path = NodePath("VerticalGuide")
 camera_node = NodePath("FocusPoint/Gimbal/Camera")
 
 [node name="Armature" type="Spatial" parent="."]
@@ -108,27 +87,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
-[node name="Target" type="Position3D" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0304438, 4.94258, -0.07937 )
-
-[node name="RayCast_Vertical" type="RayCast" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target"]
-enabled = true
-cast_to = Vector3( 0, -10, 0 )
-collide_with_areas = true
-collide_with_bodies = false
-
-[node name="RayCast_Horizontal" type="RayCast" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/Target"]
-enabled = true
-cast_to = Vector3( 0, 0, -30 )
-collide_with_areas = true
-
 [node name="BaseGizmo" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
-input_ray_pickable = true
 
 [node name="YGizmo" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2" instance=ExtResource( 3 )]
 transform = Transform( -4.37114e-008, -1, 0, 1, -4.37114e-008, 0, 0, 0, 1, 0, 5, 0 )
-input_ray_pickable = true
 
 [node name="XGizmo" parent="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2" instance=ExtResource( 4 )]
 transform = Transform( -4.37114e-008, 0, 1, 0, 1, 0, -1, 0, -4.37114e-008, 0, 5.5, 0 )
@@ -141,40 +104,15 @@ gravity_point = true
 [node name="CollisionShape" type="CollisionShape" parent="Floor"]
 shape = SubResource( 3 )
 
-[node name="MarkerVertical" type="StaticBody" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, -5.176 )
-
-[node name="CollisionShape" type="CollisionShape" parent="MarkerVertical"]
-shape = SubResource( 4 )
-
-[node name="MeshInstance" type="MeshInstance" parent="MarkerVertical"]
-transform = Transform( 0.5, 0, 0, 0, 0.05, 0, 0, 0, 0.5, 0, 0, 0 )
-visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="Sprite3D" type="Sprite3D" parent="MarkerVertical"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0.1, 0 )
-modulate = Color( 1, 0, 0, 1 )
-axis = 1
-texture = ExtResource( 5 )
-
 [node name="Base" type="Area" parent="."]
 editor/display_folded = true
 
 [node name="001-Base" type="MeshInstance" parent="Base"]
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="Base"]
-shape = SubResource( 8 )
-
-[node name="Collider" parent="." instance=ExtResource( 7 )]
-input_ray_pickable = false
-
-[node name="VerticalGuide" parent="." instance=ExtResource( 8 )]
-visible = false
+shape = SubResource( 5 )
 
 [node name="Lamp" type="OmniLight" parent="."]
 transform = Transform( -0.290865, -0.771101, 0.566393, -0.0551891, 0.604525, 0.794672, -0.955171, 0.199884, -0.218392, 2.86506, 10.7796, -1.00545 )
@@ -182,29 +120,26 @@ shadow_enabled = true
 omni_range = 19.9
 
 [node name="FocusPoint" type="Spatial" parent="."]
-editor/display_folded = true
+transform = Transform( 0.778686, 0, 0.627414, 0, 1, 0, -0.627414, 0, 0.778686, 0, 0, 0 )
 
 [node name="Gimbal" type="Spatial" parent="FocusPoint"]
+transform = Transform( 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="FocusPoint/Gimbal"]
-transform = Transform( -4.37114e-008, -0.241007, 0.970523, 0, 0.970523, 0.241007, -1, 1.05348e-008, -4.24229e-008, 15.4791, 5.31868, -2.84712 )
+transform = Transform( -4.37114e-008, -0.241007, 0.970523, 0, 0.970523, 0.241007, -1, 1.05348e-008, -4.24229e-008, 15.479, 5.319, -4 )
 current = true
 fov = 50.0
 near = 0.1
 far = 448.3
 
-[node name="ArmIK" parent="." instance=ExtResource( 9 )]
+[node name="ArmIK" parent="." instance=ExtResource( 6 )]
 
-[node name="HUD" parent="." instance=ExtResource( 10 )]
-editor/display_folded = true
+[node name="HUD" parent="." instance=ExtResource( 7 )]
 margin_left = 0.14987
 margin_top = 1.14262
 margin_right = 0.149902
 margin_bottom = 1.14264
 mouse_filter = 2
-
-[node name="ServoPanel" parent="HUD" index="0"]
-editor/display_folded = false
 
 [node name="GripperSlider" parent="HUD/ServoPanel/VBox" index="0"]
 editor/display_folded = false
@@ -244,32 +179,35 @@ margin_bottom = 47.5
 editor/display_folded = true
 anchor_left = 0.0
 anchor_right = 1.0
-margin_left = 0.0
-margin_top = -47.5
-margin_right = 0.0
-margin_bottom = 47.5
+margin_left = 4.0
+margin_top = -43.5
+margin_right = -4.0
+margin_bottom = 43.5
 alignment = 1
 
 [node name="HBoxPort" parent="HUD/SerialSettings/VBoxContainer" index="0"]
-margin_top = 17.0
-margin_bottom = 37.0
+margin_top = 13.0
+margin_bottom = 33.0
 alignment = 1
 
 [node name="UpdateButton" parent="HUD/SerialSettings/VBoxContainer/HBoxPort" index="0"]
-margin_left = 48.0
-margin_right = 108.0
+margin_left = 44.0
+margin_right = 104.0
 
 [node name="PortList" parent="HUD/SerialSettings/VBoxContainer/HBoxPort" index="1"]
-margin_left = 112.0
-margin_right = 212.0
+margin_left = 108.0
+margin_right = 208.0
 
 [node name="HBoxBaudRate" parent="HUD/SerialSettings/VBoxContainer" index="1"]
-margin_top = 57.0
-margin_bottom = 77.0
+margin_top = 53.0
+margin_bottom = 73.0
 
-[node name="Holodeck" parent="." instance=ExtResource( 11 )]
+[node name="MarginContainer" parent="HUD/PosePanel" index="0"]
+editor/display_folded = true
 
-[node name="Gridlines" parent="." instance=ExtResource( 12 )]
+[node name="Holodeck" parent="." instance=ExtResource( 8 )]
+
+[node name="Gridlines" parent="." instance=ExtResource( 9 )]
 visible = false
 
 [node name="EasingX" type="Tween" parent="."]
@@ -282,13 +220,13 @@ visible = false
 wait_time = 0.05
 autostart = true
 
+[node name="PoseEditor" parent="." instance=ExtResource( 10 )]
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_entered"]
 [connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/BaseGizmo" to="." method="_on_BaseGizmo_mouse_exited"]
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/YGizmo" to="." method="_on_YGizmo_mouse_entered"]
 [connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/YGizmo" to="." method="_on_YGizmo_mouse_exited"]
 [connection signal="mouse_entered" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/XGizmo" to="." method="_on_XGizmo_mouse_entered"]
 [connection signal="mouse_exited" from="Armature/002-Shoulder2/Spatial/003-Arm2/Spatial2/003-Arm2/XGizmo" to="." method="_on_XGizmo_mouse_exited"]
-[connection signal="mouse_entered" from="VerticalGuide" to="." method="_on_VerticalGuide_mouse_entered"]
 [connection signal="servo_moved" from="ArmIK" to="." method="_on_ArmIK_servo_moved"]
 [connection signal="servo_moved" from="ArmIK" to="HUD" method="_on_ArmIK_servo_moved"]
 [connection signal="is_ik_enabled" from="HUD" to="." method="_on_HUD_is_ik_enabled"]

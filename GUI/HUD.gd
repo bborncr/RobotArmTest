@@ -98,33 +98,27 @@ func send_message(servo, pos):
 	var msg
 	var format_message = "%s,%s"
 	msg = format_message % [String(servo), String(pos)]
-	print(msg)	
+#	print(msg)	
 	msg += com.endline
 	PORT.write(msg)
 
 
 func _on_HUD_servo_manually_moved(base, shoulder, elbow, wrist, gripper):
-#	_base = base
-#	_shoulder = shoulder
-#	_elbow = elbow
-#	_wrist = wrist
-#	_gripper = gripper
-#	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
-#	send_message(0, _base)
-#	yield(get_tree().create_timer(0.1), "timeout")
-#	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
-#	send_message(1, _shoulder)
-#	yield(get_tree().create_timer(0.1), "timeout")
-#	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
-#	send_message(2, 180-_elbow) # elbow servo is inverted
-#	yield(get_tree().create_timer(0.1), "timeout")
-#	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
-#	send_message(3, _wrist)
-#	yield(get_tree().create_timer(0.1), "timeout")
-#	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
-#	send_message(4, _gripper)
-#	yield(get_tree().create_timer(0.1), "timeout")
-	pass
+	_base = base
+	_shoulder = shoulder
+	_elbow = elbow
+	_wrist = wrist
+	_gripper = gripper
+	$ServoPanel/VBox/BaseSlider/HSlider.set_value(_base)
+	send_message(0, _base)
+	$ServoPanel/VBox/ShoulderSlider/HSlider.set_value(_shoulder)
+	send_message(1, _shoulder)
+	$ServoPanel/VBox/ElbowSlider/HSlider.set_value(_elbow)
+	send_message(2, 180-_elbow) # elbow servo is inverted
+	$ServoPanel/VBox/WristSlider/HSlider.set_value(_wrist)
+	send_message(3, _wrist)
+	$ServoPanel/VBox/GripperSlider/HSlider.set_value(_gripper)
+	send_message(4, _gripper)
 
 
 func _on_Connect_pressed():

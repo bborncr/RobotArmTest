@@ -1,18 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://GUI/HUD.gd" type="Script" id=1]
-[ext_resource path="res://GUI/lightstyle.tres" type="StyleBox" id=2]
-[ext_resource path="res://GUI/ServoSlider.tscn" type="PackedScene" id=3]
-[ext_resource path="res://GUI/TextureButton.gd" type="Script" id=4]
-[ext_resource path="res://Serial/Com.gd" type="Script" id=5]
-[ext_resource path="res://GUI/CoordPanel.tscn" type="PackedScene" id=6]
-[ext_resource path="res://FileDialog.gd" type="Script" id=7]
-
-[sub_resource type="VisualShader" id=1]
-graph_offset = Vector2( -242, 116 )
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[ext_resource path="res://GUI/ServoSlider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/TextureButton.gd" type="Script" id=3]
+[ext_resource path="res://Serial/Com.gd" type="Script" id=4]
+[ext_resource path="res://GUI/CoordPanel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://FileDialog.gd" type="Script" id=6]
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
@@ -23,14 +16,12 @@ script = ExtResource( 1 )
 
 [node name="ServoPanel" type="Panel" parent="."]
 editor/display_folded = true
-material = SubResource( 2 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -306.0
 margin_top = 45.0
 margin_right = -40.0
 margin_bottom = 457.0
-custom_styles/panel = ExtResource( 2 )
 
 [node name="VBox" type="VBoxContainer" parent="ServoPanel"]
 anchor_top = 0.5
@@ -42,25 +33,25 @@ margin_right = -1.38
 margin_bottom = 130.0
 custom_constants/separation = 23
 
-[node name="GripperSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
+[node name="GripperSlider" parent="ServoPanel/VBox" instance=ExtResource( 2 )]
 editor/display_folded = true
 
-[node name="WristSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
+[node name="WristSlider" parent="ServoPanel/VBox" instance=ExtResource( 2 )]
 editor/display_folded = true
 margin_top = 57.0
 margin_bottom = 91.0
 
-[node name="ElbowSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
+[node name="ElbowSlider" parent="ServoPanel/VBox" instance=ExtResource( 2 )]
 editor/display_folded = true
 margin_top = 114.0
 margin_bottom = 148.0
 
-[node name="ShoulderSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
+[node name="ShoulderSlider" parent="ServoPanel/VBox" instance=ExtResource( 2 )]
 editor/display_folded = true
 margin_top = 171.0
 margin_bottom = 205.0
 
-[node name="BaseSlider" parent="ServoPanel/VBox" instance=ExtResource( 3 )]
+[node name="BaseSlider" parent="ServoPanel/VBox" instance=ExtResource( 2 )]
 editor/display_folded = true
 margin_top = 228.0
 margin_bottom = 262.0
@@ -83,7 +74,7 @@ margin_top = -58.0
 margin_right = 40.5
 margin_bottom = -26.0
 text = "Port Config"
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="SerialSettings" type="PopupPanel" parent="."]
 visible = true
@@ -95,21 +86,20 @@ margin_left = -130.5
 margin_top = -76.0002
 margin_right = 130.5
 margin_bottom = 76.0002
-custom_styles/panel = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SerialSettings"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -130.5
-margin_top = -76.0002
-margin_right = 130.5
-margin_bottom = 76.0002
+margin_left = -126.5
+margin_top = -72.0002
+margin_right = 126.5
+margin_bottom = 72.0002
 custom_constants/separation = 20
 
 [node name="HBoxPort" type="HBoxContainer" parent="SerialSettings/VBoxContainer"]
-margin_right = 261.0
+margin_right = 253.0
 margin_bottom = 20.0
 
 [node name="UpdateButton" type="Button" parent="SerialSettings/VBoxContainer/HBoxPort"]
@@ -125,31 +115,32 @@ rect_min_size = Vector2( 100, 0 )
 
 [node name="HBoxBaudRate" type="HBoxContainer" parent="SerialSettings/VBoxContainer"]
 margin_top = 40.0
-margin_right = 261.0
+margin_right = 253.0
 margin_bottom = 60.0
 alignment = 1
 
 [node name="Connect" type="Button" parent="SerialSettings/VBoxContainer/HBoxBaudRate"]
-margin_left = 98.0
-margin_right = 162.0
+margin_left = 94.0
+margin_right = 158.0
 margin_bottom = 20.0
 text = "Connect"
 
 [node name="Com" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 
-[node name="CoordPanel" parent="." instance=ExtResource( 6 )]
+[node name="CoordPanel" parent="." instance=ExtResource( 5 )]
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 216.0
 margin_bottom = 123.0
 
 [node name="PosePanel" type="Panel" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -166.5
-margin_right = 166.5
-margin_bottom = 82.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = -122.0
+margin_right = 373.0
+margin_bottom = -40.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PosePanel"]
 anchor_right = 1.0
@@ -203,8 +194,7 @@ margin_top = -96.5
 margin_right = 180.0
 margin_bottom = 96.5
 popup_exclusive = true
-script = ExtResource( 7 )
-
+script = ExtResource( 6 )
 [connection signal="toggled" from="ServoPanel/VBox/SelectIK" to="." method="_on_SelectIK_toggled"]
 [connection signal="pressed" from="ServoPanel/TextureButton" to="ServoPanel/TextureButton" method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="SerialSettings/VBoxContainer/HBoxPort/UpdateButton" to="." method="_on_UpdateButton_pressed"]
