@@ -27,7 +27,7 @@ func _on_ItemList_item_activated(index):
 
 func _on_ItemList_item_rmb_selected(index, at_position):
 	selected = index
-	print("selected: ", selected)
+#	print("selected: ", selected)
 	var mouse_position = get_viewport().get_mouse_position()
 	context_menu.rect_position = mouse_position
 	context_menu.show()
@@ -54,9 +54,9 @@ func update_poses():
 		print(Data.poses.pose[i])
 
 func load_data():
-	print("Clearing")
+#	print("Clearing")
 	clear()
 	for i in Data.poses.pose.size():
 		add_item("Pose: " + str(i), pose_icon)
 		set_item_metadata(i, Data.poses.pose[i])
-		print("adding items")
+#		print("adding items")

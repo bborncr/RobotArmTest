@@ -135,6 +135,7 @@ far = 448.3
 [node name="ArmIK" parent="." instance=ExtResource( 6 )]
 
 [node name="HUD" parent="." instance=ExtResource( 7 )]
+editor/display_folded = true
 margin_left = 0.14987
 margin_top = 1.14262
 margin_right = 0.149902
@@ -243,6 +244,7 @@ autostart = true
 [connection signal="pressed" from="HUD/PosePanel/MarginContainer/HBoxContainer/Button4" to="." method="_on_Button4_pressed"]
 [connection signal="file_selected" from="HUD/FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="item_selected" from="PoseEditor/Panel/MarginContainer/ItemList" to="." method="_on_ItemList_item_selected"]
 
 [editable path="HUD"]
 
@@ -255,3 +257,5 @@ autostart = true
 [editable path="HUD/ServoPanel/VBox/ShoulderSlider"]
 
 [editable path="HUD/ServoPanel/VBox/BaseSlider"]
+
+[editable path="PoseEditor"]

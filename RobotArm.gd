@@ -29,6 +29,8 @@ var y_target = 100
 var z = 90
 
 var timer = false
+var playing = false
+var pose_selected = 0
 
 var mandatory_keys = ["x", "y", "z", "g", "wa", "wr"]
 
@@ -159,13 +161,19 @@ func _on_Button_pressed():
 	new_pose.x = x_target
 	new_pose.y = y_target
 	new_pose.z = z
-	Data.poses.pose.append(new_pose)
+	if pose_selected == Data.poses.pose.size():
+		Data.poses.pose.append(new_pose)
+	else:
+		Data.poses.pose.insert(pose_selected + 1, new_pose)
+	pose_selected = pose_selected + 1
 	pose_editor.load_data()
+	pose_editor.select(pose_selected)
 #	print("Added new pose")
 #	print("Num poses:",poses.pose.size())
 
 # PLAY
 func _on_Button2_pressed():
+	playing = true
 	for i in Data.poses.pose.size():
 		if Data.poses.pose[i].has_all(mandatory_keys):
 			easingx.interpolate_property(self, 'x_target', x_target, Data.poses.pose[i].x, Data.poses.speed, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
@@ -182,6 +190,9 @@ func _on_Button2_pressed():
 #		print("z:",z)
 		yield(get_tree().create_timer(Data.poses.speed + Data.poses.pause), "timeout")
 		pose_editor.unselect(i)
+	playing = false
+	pose_selected = Data.poses.pose.size()-1
+	pose_editor.select(pose_selected)
 
 # SAVE button
 func _on_Button4_pressed():
@@ -198,6 +209,7 @@ func _on_FileDialog_file_selected(path):
 		print("Loading...")
 		print(path)
 		Data.poses = FileAccess.load(path)
+		pose_selected = Data.poses.pose.size()
 #		print(Data.poses)
 		pose_editor.load_data()
 	elif $HUD/FileDialog.get_mode() == FileDialog.MODE_SAVE_FILE:
@@ -207,3 +219,10 @@ func _on_FileDialog_file_selected(path):
 
 func _on_Timer_timeout():
 	timer = true
+
+func _on_ItemList_item_selected(index):
+	if !playing:
+		x_target = Data.poses.pose[index].x
+		y_target = Data.poses.pose[index].y
+		z = Data.poses.pose[index].z
+		pose_selected = index
